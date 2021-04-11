@@ -1,0 +1,219 @@
+$def with (page_data)
+<div class="container-fluid">
+   <div class="row">
+       <div class="col-lg-6">
+           <p class="font-style1"><h1 class="display-4"><span id="set-greetings"></span> Ajith!</h1></p>
+           <p class="font-style1">Simplified home page for most of the browsing needs.. </p>
+           <p class="font-style1">You are living for <span class="life_days text-success"></span> days.  </p>
+           <!--
+           <p class="font-style1">Remaining days to complete Data Science : <span class="ds_days text-danger"></span> days</p>
+           -->
+       </div>
+       <div class="col-lg-3">
+
+       </div>
+       <div class="col-lg-3">
+           <br>
+           <iframe src="http://free.timeanddate.com/clock/i7a8wukd/n438/fs16/tct/pct/tt0" frameborder="0" width="389" height="20" allowTransparency="true"></iframe>
+           <br>
+           <p>
+               <a href="https://weather.com/en-IN/weather/today"><u><b>Weather details</b></u></a>
+               <br>$page_data["weather_info"]["temperature"]
+               <br>$page_data["weather_info"]["temperature_phrase"]
+               <br>$page_data["weather_info"]["precip_phrase"]
+           </p>
+       </div>
+   </div>
+    <hr>
+   <div class="row">
+       <div class="col-lg-4">
+           <h3 class="font-color1">Quote:</h3>
+           <blockquote class="blockquote ">
+               <p><span class="get-quote text-center"></span></p>
+               <footer class="blockquote-footer"><span class="get-author"></span></footer>
+           </blockquote>
+       </div>
+       <div class="col-lg-2">
+           <h3 class="font-color1">Success Mantra </h3>
+           <blockquote class="blockquote ">
+               <p class="font-style1">
+                   Have a great AIM. <br>
+                   Continuously acquire knowledge.<br>
+                   Do hard work.<br>
+                   Perseverance and succeed..<br>
+               </p>
+               <footer class="blockquote-footer ">APJ Abdul Kalam</footer>
+           </blockquote>
+
+       </div>
+       <div class="col-lg-2">
+           <h3 class="font-color1">2021 Resolutions </h3>
+           <p class="font-style1">
+               Get experience in solving Datas cience problems <br>
+           </p>
+           <h5 class="font-color1">2020 Resolutions </h5>
+           <p class="font-style1">
+               Become Data scientist<br>
+               Be Fit
+           </p>
+       </div>
+       <div class="col-lg-4">
+           <div class="row">
+               <div class="col-lg-6">
+                   <h3 class="font-color1">Expenses</h3>
+                   <p> Current month expense : Rs.$page_data["expense_information"]["current_month"]</p>
+                   $if page_data["expense_information"]["expense_warn"] == True:
+                       <p class="text-danger"><b>Monthly expense warning!</b></p>
+               </div>
+               <div class="col-lg-6>">
+                   <h3 class="font-color1"> Reminders</h3>
+                   <p>
+                       $page_data["reminders_list"][0]["reminder"] on
+                       $page_data["reminders_list"][0]["duedate"]
+                   </p>
+               </div>
+           </div>
+       </div>
+   </div>
+
+   <div class="row">
+       <div class="col-lg-6">
+           <h3 class="font-color1">System Information </h3>
+           <table class="table table-striped">
+               <tbody>
+                   <tr>
+                       <td>System Name</td>
+                       <td>$page_data["technical_information"]["system_name"]</td>
+                   </tr>
+                   <tr>
+                       <td>IP address</td>
+                       <td>$page_data["technical_information"]["ip_address"]</td>
+                   </tr>
+                   <tr>
+                       <td>Last backup date</td>
+                       <td>$page_data["technical_information"]["last_backup_date"]</td>
+                   </tr>
+               </tbody>
+           </table>
+       </div>
+       <div class="col-lg-3">
+           <a href="#" class="notification" onclick='update_exercise_status()'>
+           <span>Exercise</span>
+           <span class="badge" id="exercise_btn_status"></span>
+           </a>
+           &nbsp
+           <a href="#" class="notification" onclick=''>
+           <span>Happiness</span>
+           <span class="badge"></span>
+           </a>
+           &nbsp
+           <a href="#" class="notification" onclick='alert("Hello Krishna")'>
+           <span>Sickness</span>
+           <span class="badge"></span>
+           </a>
+       </div>
+       <div class="col-lg-3">
+           <h3 class="text-center font-color1">Internet speed </h3>
+           <iframe src="https://fast.com/" frameborder="0" width=100% height="250"
+                    allowTransparency="true"></iframe>
+       </div>
+   </div>
+   <hr>
+   <div class="row">
+       <div class="col-lg-6">
+           <div class="row">
+               <div class="col-lg-10">
+                   <h3 class="font-color1">Links</h3>
+               </div>
+               <div class="col-lg-2">
+                   <button type="button" class="btn btn-outline-success btn-sm" id="btn_new_link" style="float: right;">New</button>
+               </div>
+           </div>
+           <form id="links_form">
+               <div class="md-form">
+                   <input type="text" id="url_name" class="form-control" name="url_name">
+                   <label for="url_name">Name</label>
+               </div>
+               <div class="md-form">
+                   <input type="text" id="url_address" class="form-control" name="url_address">
+                   <label for="url_address">Url</label>
+               </div>
+               <select class="form-control" name="url_type">
+                   <option>Others</option>
+                   <option>Important</option>
+                   <option>Information</option>
+                   <option>Entertainment</option>
+               </select>
+               <div class="md-form">
+                   <button class="btn btn-warning btn-sm" id="btn-link-cancel">Cancel</button>
+                   <button type="submit" class="btn btn-primary btn-sm" id="btn_save_link">Save</button>
+               </div>
+           </form>
+           <div class="links_table">
+               <table class="table table-hover">
+                   <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Count</th>
+                            <th scope="col">Accessed on</th>
+                            <th scope="col">Type</th>
+                        </tr>
+                   </thead>
+                   <tbody id="links_table_body">
+                   $for record in page_data["urls"]:
+                       <tr class="font-links" data-id="$record['_id']">
+                           <td>
+                               <a href='$record["url"]' onclick='add_link_count("$record["name"]")'><div class="font-links"> $record["name"] </div> </a>
+                           </td>
+                           <td> $record["click_count"] </td>
+                           <td>$record["accessed_on"]</td>
+                           <td>$record["type"]</td>
+                       </tr>
+                   </tbody>
+               </table>
+           </div>
+       </div>
+       <div class="col-lg-6">
+           <div class="row">
+               <div class="col-lg-10">
+                   <h3 class="font-color1">Notes/ToDo</h3>
+               </div>
+               <div class="col-lg-2">
+                   <button type="button" class="btn btn-outline-success btn-sm" id="btn_new_notes" style="float: right;">New</button>
+               </div>
+           </div>
+           <form id="notes_form">
+               <div class="md-form">
+                   <input type="text" id="notes_title" class="form-control" name="title">
+                   <label for="notes_title">Title</label>
+               </div>
+               <div class="md-form">
+                   <textarea class="form-control" id="notes" rows="3" name="notes"></textarea>
+                   <label for="notes">Notes</label>
+               </div>
+               <div class="md-form">
+                   <button class="btn btn-warning btn-sm" id="btn_notes_cancel">Cancel</button>
+                   <button type="submit" class="btn btn-primary btn-sm" id="btn_save_notes">Save</button>
+               </div>
+           </form>
+           <div class="notes_cards card-columns" id="notes_cards_block">
+                $for record in page_data["notes_list"]:
+                    <div class="card bg-light mb-3" data-rowid=$record["_id"] style="max-width: 18rem;">
+                        <!-- <div class="card-header">Header</div> -->
+                        <div class="card-body">
+                            <h5 class="card-title">$record["title"]</h5>
+                            <p class="card-text">$record["notes"]</p>
+                        </div>
+                    </div>
+           </div>
+       </div>
+   </div>
+   <hr>
+    <div class="row">
+        <div class="col-lg-12">
+            <h3 class="text-center">News</h3>
+            <iframe src="https://www.manoramaonline.com/home.html" frameborder="0" height=600px width=100%
+                    style="border:none;"></iframe>
+        </div>
+    </div>
+</div>
