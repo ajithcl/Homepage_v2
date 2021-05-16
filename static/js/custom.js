@@ -9,6 +9,8 @@ $(document).ready(function(){
     window.elmt_btn_new_notes = document.getElementById('btn_new_notes');
     window.links_form_input = document.querySelector('#links_form');
     window.notes_form_input = document.querySelector('#notes_form');
+    window.btn_nav_search = document.querySelector('#btn_nav_search');
+    window.txt_nav_search = document.querySelector('#nav_search_textbox');
 
     if (elmt_greeting != null){
         let time = new Date();
@@ -33,6 +35,7 @@ $(document).ready(function(){
     elmt_btn_link_cancel.addEventListener('click', cancel_link_clicked);
     window.elmt_btn_new_notes.addEventListener('click', new_notes_clicked);
     elmt_btn_notes_cancel.addEventListener('click', cancel_notes_clicked);
+    window.btn_nav_search.addEventListener('click',btn_nav_search_clicked);
 
     //getDatascienceRemainingDays();
     getLifeDays();
@@ -130,6 +133,22 @@ $(document).ready(function(){
         })
     }
 })
+
+// Search button clicked in the navigation bar
+// Ref : https://codepen.io/konfuzius/pen/oxBVqR
+function btn_nav_search_clicked(){
+    txt_search = nav_search_textbox.value.toLowerCase();
+
+    var divs = document.getElementsByClassName("url-name");
+    for (var i =0; i < divs.length; i++){
+        index = divs[i].innerText.toLowerCase().indexOf(txt_search);
+        if (index != -1){
+            targetId = divs[i].parentNode.parentNode.parentNode.id;
+            document.getElementById(targetId).scrollIntoView();
+            break;
+        }
+    }
+}
 // Calculate days between birthdate and today
 function getLifeDays(){
     life_days = document.querySelector('.life_days');
