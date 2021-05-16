@@ -161,9 +161,9 @@ $def with (page_data)
                    </thead>
                    <tbody id="links_table_body">
                    $for record in page_data["urls"]:
-                       <tr class="font-links" data-id="$record['_id']">
+                       <tr class="font-links" data-id="$record['_id']" id="$record['_id']">
                            <td>
-                               <a href='$record["url"]' onclick='add_link_count("$record["name"]")'><div class="font-links"> $record["name"] </div> </a>
+                               <a href='$record["url"]' onclick='add_link_count("$record["name"]")'><div class="font-links url-name"> $record["name"] </div> </a>
                            </td>
                            <td> $record["click_count"] </td>
                            <td>$record["accessed_on"]</td>
