@@ -6,7 +6,11 @@ import sys
 import web
 import logging
 import requests
+import imaplib
+import json
 from bs4 import BeautifulSoup
+import dateutil.parser as dt_parser
+from configparser import ConfigParser
 
 sys.path.append("D:\\Ajith\\PythonProject\\LookAtYou\\")  # For including classes from LookAtYou project
 from Models import ExpenseModel, ReminderModel, HealthModel
@@ -27,7 +31,9 @@ urls = ('/', 'Home',
         '/deletenotes', 'DeleteNotes',
         '/get_exercise_status', 'get_exercise_status',
         '/update_exercise_status', 'update_exercise_status',
-        '/SarusVlogAnalysis', 'SarusVlogAnalysis')
+        '/SarusVlogAnalysis', 'SarusVlogAnalysis',
+        '/GetGMail', 'GetGMail'
+        )
 
 app = web.application(urls, globals())
 session = web.session.Session(app, web.session.DiskStore("sessions"))
@@ -216,5 +222,65 @@ class SarusVlogAnalysis():
         return render.Sarusvlog_analysis()
 
 
+class GetGMail:
+    def GET(self):
+        gmail_userid = ""
+        gmail_password = ""
+        mail_count = 0
+        config_parser = ConfigParser()
+        try:
+            # Read from configuration file
+            config_parser.read('configuration/config.ini')
+            gmail_userid = config_parser.get("gmail", "userid")
+            gmail_password = config_parser.get("gmail", "password")
+            mail_count = config_parser.getint("gmail", "mail_count")
+        except:
+            return "error:Invalid configurations"
+
+        imap = imaplib.IMAP4_SSL('imap.gmail.com')
+        imap.login(gmail_userid, gmail_password)
+        imap.select('Inbox')
+
+        _, data = imap.search(None, 'ALL')
+        bytes_list = data[0].split()
+
+        i = 0
+        mail_data_list = []
+        for num in reversed(bytes_list):
+            _, content = imap.fetch(num, '(RFC822)')
+
+            content = content[0]
+            content = str(content[1])
+            # Split the entire data in to  tuples have 3 sections
+            # based on word 'Content-Disposition
+            content = content.partition('Content-Disposition')
+
+            # Select the first partition having meta data
+            first_section = content[0]
+            dict_item = {}
+            for items in first_section.split('\\r\\n'):
+                if items.startswith('Date:'):
+                    dt_val = dt_parser.parse(items.lstrip('Date:')).strftime("%d/%m/%Y %H:%M:%S %p")
+                    dict_item["Date"] = dt_val
+                if items.startswith('From'):
+                    dict_item["From"] = items.lstrip('From:')
+                if items.startswith("Subject"):
+                    dict_item["Subject"] = items.lstrip('Subject:')
+
+            if len(dict_item) != 0:
+                mail_data_list.append(dict_item)
+
+            i += 1
+            if i > mail_count:
+                break
+
+        imap.logout()
+        json_data = json.dumps(mail_data_list)
+        return json_data
+
+
+"""
+Run the application
+"""
 if __name__ == "__main__":
     app.run()
