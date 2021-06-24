@@ -119,6 +119,35 @@ $def with (page_data)
        </div>
    </div>
    <hr>
+
+    <!-- GMail content here-->
+
+   <div class="row">
+        <div class="col-lg-4">
+            <div class="row">
+                <button type="button" class="btn btn-outline-primary" id="btn_GMail" style="float: right;">Show GMail Content</button>
+           </div>
+           <div  id="mail_spinner_div" hidden>
+               <div class="spinner-grow" role="status"></div>
+               <i>Accessing mail contents... </i>
+            </div>
+            <table class="table table-bordered table-sm"  width="250" id="GmailTableId" hidden>
+                <thead class="thead-light">
+                    <tr>
+                      <th>Date</th>
+                      <th>From</th>
+                      <th>Subject</th>
+                    </tr>
+                </thead>
+                <tbody id="gmail_body">
+                <!-- Filled by java script -->
+                </tbody>
+            </table>
+        </div>
+       <div class="col-lg-4"></div>
+       <div class="col-lg-4"></div>
+   </div>
+   <hr>
    <div class="row">
        <div class="col-lg-6">
            <div class="row">
@@ -150,7 +179,7 @@ $def with (page_data)
                </div>
            </form>
            <div class="links_table">
-               <table class="table table-hover">
+               <table class="table table-striped table-sm">
                    <thead>
                         <tr>
                             <th scope="col">Name</th>

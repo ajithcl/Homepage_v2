@@ -1,16 +1,17 @@
 $(document).ready(function(){
     // Greeting in summary page
-    let elmt_greeting = document.getElementById('set-greetings'),
-        elmt_btn_link_cancel = document.getElementById('btn-link-cancel'),
-        elmt_btn_notes_cancel = document.getElementById('btn_notes_cancel');
+    let elmt_greeting         = document.getElementById('set-greetings'),
+        elmt_btn_link_cancel  = document.getElementById('btn-link-cancel'),
+        elmt_btn_notes_cancel = document.getElementById('btn_notes_cancel'),
+        elmt_btn_gmail        = document.getElementById('btn_GMail');
 
     // Global elements
-    window.elmt_btn_new_link = document.getElementById('btn_new_link');
+    window.elmt_btn_new_link  = document.getElementById('btn_new_link');
     window.elmt_btn_new_notes = document.getElementById('btn_new_notes');
-    window.links_form_input = document.querySelector('#links_form');
-    window.notes_form_input = document.querySelector('#notes_form');
-    window.btn_nav_search = document.querySelector('#btn_nav_search');
-    window.txt_nav_search = document.querySelector('#nav_search_textbox');
+    window.links_form_input   = document.querySelector('#links_form');
+    window.notes_form_input   = document.querySelector('#notes_form');
+    window.btn_nav_search     = document.querySelector('#btn_nav_search');
+    window.txt_nav_search     = document.querySelector('#nav_search_textbox');
 
     if (elmt_greeting != null){
         let time = new Date();
@@ -36,6 +37,7 @@ $(document).ready(function(){
     window.elmt_btn_new_notes.addEventListener('click', new_notes_clicked);
     elmt_btn_notes_cancel.addEventListener('click', cancel_notes_clicked);
     window.btn_nav_search.addEventListener('click',btn_nav_search_clicked);
+    elmt_btn_gmail.addEventListener('click', btn_get_gmail_clicked);
 
     //getDatascienceRemainingDays();
     getLifeDays();
@@ -96,7 +98,7 @@ $(document).ready(function(){
                         data: form_data,
                         success: function (res){
                         if (res =="success"){
-                            alert("Success")
+                            // alert("Success")
                         }
                         else{
                             alert("Error occured while saving notes!");
@@ -232,6 +234,68 @@ function add_link_count(link_name){
             success: function (res){
             }
         })
+}
+
+function btn_get_gmail_clicked(e){
+    e.preventDefault();
+
+    // Show the progress spinner
+    elmt_mail_spinner = document.getElementById('mail_spinner_div');
+    elmt_mail_spinner.removeAttribute('hidden');
+
+    $.ajax({
+        url: '/GetGMail',
+        type: 'GET',
+        success: function(result){
+
+            if (result == null){
+                // Hide the progress spinner
+                elmt_mail_spinner.setAttribute('hidden','true');
+                alert("Unable to access mails");
+                return;
+            }
+            else if (result.startsWith("error:")){
+                // Hide the progress spinner
+                elmt_mail_spinner.setAttribute('hidden','true');
+                alert(result.substring(6));
+                return;
+            }
+            // console.log(typeof(result));
+            // console.log(result);
+            try{
+                    const mail_data = JSON.parse(result);
+                    table_body_html="";
+
+                    mail_data.forEach(function(item){
+                        /*
+                        console.log(item.Subject);
+                        console.log(item.From);
+                        console.log(item.Date);
+                        */
+                        table_body_html+=`
+                            <tr>
+                            <td>${item.Date}</td>
+                            <td>${item.From}</td>
+                            <td>${item.Subject}</td>
+                            </tr>`
+                    })
+
+                    // Show the mail table
+                    elmt_gmail_table=document.getElementById('GmailTableId');
+                    elmt_gmail_table.removeAttribute('hidden');
+                    elmt_table_body = document.getElementById('gmail_body');
+
+                    // Hide the progress spinner
+                    elmt_mail_spinner.setAttribute('hidden','true');
+                    elmt_table_body.innerHTML = table_body_html;
+            }
+            catch (err){
+                // Hide the progress spinner
+                elmt_mail_spinner.setAttribute('hidden','true');
+                alert("Error while parsing the mail contents.")
+                }
+        }
+    })
 }
 
 // Get the exercise status
