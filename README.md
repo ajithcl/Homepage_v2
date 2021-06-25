@@ -1,5 +1,5 @@
-# Homepage_v2
- Homepage vesion2 - Personalized homepage for the browsers. (And not dependent on browser. So that we can access same data in all browsers.)
+# Personal Homepage
+Personalized homepage for the browsers.
  
  Started this project as of my learning project. But now I am very much interested in it and adding new features for my needs.
  Intention of this project is to have a highly personalised home page for the user. This will be like all in one page for the user for his almost all browsing needs.
@@ -27,8 +27,17 @@
  </tr>
  </table>
  
+ <hr>
  
- ### UI screenshots: 
+ ### Who can use this?
+ 
+ Everyone!!! <br>
+ Normally users may have more than one browser in their systems. Each browser my have different homapages, bookmarks and history.
+ Users can make set this homepage in any browser, which will make unique browsing experience throughout the system.
+ More than just welcome page, we can include addtional details like TODO, mail access, weather access, reminders etc.
+ <hr>
+ 
+ ### How is it look like? 
 
  ![home1](https://user-images.githubusercontent.com/44773122/114543440-d6dfd780-9c76-11eb-8b7c-8f25030de64c.png)
  Weather details, Quote pulled from external web service.<br>
@@ -36,20 +45,30 @@
  If you done exercise for the day, just click on exercise button to track it.<br>
  Internet speed is getting from external website.<br>
  
+ <hr>
+ 
  ![Screenshot 2021-06-24 171047](https://user-images.githubusercontent.com/44773122/123256961-2d874e80-d50f-11eb-88d2-9a0b25df77c5.png)
 With a click of a button, user can view the latest mails from his gmail account.
+ 
+ <hr>
  
 ![home2](https://user-images.githubusercontent.com/44773122/114544319-18bd4d80-9c78-11eb-82eb-7eb70dff2c0d.png)
 Links are similar to bookmarks. Based on the click count, priority of specific link will comeup.<br>
 Notes/ToDo - for keeping the notes.
+
+<hr>
+
 ![home3](https://user-images.githubusercontent.com/44773122/114543455-dba48b80-9c76-11eb-8f6e-b6c0a090880d.png)
 Keeping the local new paper site - for viewing the news.
 
+<hr>
+
+### How to start this web service?
+
+Homepage_v2_Server.bat  - is the batch program which will execute this web service on a specific pre-defined port.
+
+User can either double click on this batch file after logging into system or schedule it in the task manager.
 
 
-Homepage_v2_Server.bat  - can be scehduled in Windows task scheduler for executing this webservice while logging in to the system.
-Or use a shortcut of this batch file for executing manually for onetime.
-
-
-.. As always project didn't finished yet... still thinking about the updates :)
+<i>.. As always project didn't finished yet... still thinking about the updates </i> :)
  
