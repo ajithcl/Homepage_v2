@@ -46,6 +46,7 @@ $(document).ready(function(){
     //Links form submit event
     $(document).on('submit', '#links_form', function (e){
         e.preventDefault();
+
         var form_data = $(this).serialize();
         $.ajax({
             url: '/savelink',
@@ -53,11 +54,18 @@ $(document).ready(function(){
             data: form_data,
             success: function (res){
             if (res =="success"){
+                success_message = document.getElementById('links_success_message_id');
+                success_message.hidden=false;
+
                 document.getElementById("url_name").value = "";
                 document.getElementById("url_address").value = "";
+
+                setTimeout(clearMessage, 3000);
             }
             else{
-                alert("Error occured while saving link!");
+                error_message = document.getElementById('links_error_message_id');
+                error_message.hidden = false;
+                setTimeout(clearMessage, 3000);
             }
             }
         })
@@ -73,11 +81,19 @@ $(document).ready(function(){
             data: form_data,
             success: function (res){
             if (res =="success"){
+                success_message = document.getElementById("notes_success_message_id");
+                success_message.hidden=false;
+
                 document.getElementById("notes_title").value = "";
                 document.getElementById("notes").value = "";
+
+                setTimeout(clearMessage, 3000);
             }
             else{
-                alert("Error occured while saving notes!");
+                error_message = document.getElementById('notes_error_message_id');
+                error_message.hidden = false;
+
+                setTimeout(clearMessage, 3000);
             }
             }
         })
@@ -123,7 +139,7 @@ $(document).ready(function(){
                         data: {"_id":link_id},
                         success: function (res){
                             if (res =="success"){
-                                alert("Success")
+                                // alert("Success");
                             }
                             else{
                                 alert("Error occured while saving notes!");
@@ -341,6 +357,20 @@ function update_exercise_status(){
             }
         }
     })
+}
+
+function clearMessage(){
+    success_message=document.getElementById('links_success_message_id');
+    success_message.hidden = true;
+
+    error_message = document.getElementById('links_error_message_id');
+    error_message.hidden = true;
+
+    success_message = document.getElementById("notes_success_message_id");
+    success_message.hidden=true;
+
+    error_message = document.getElementById('notes_error_message_id');
+    error_message.hidden = true;
 }
 
 
