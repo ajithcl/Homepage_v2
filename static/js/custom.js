@@ -3,7 +3,8 @@ $(document).ready(function(){
     let elmt_greeting         = document.getElementById('set-greetings'),
         elmt_btn_link_cancel  = document.getElementById('btn-link-cancel'),
         elmt_btn_notes_cancel = document.getElementById('btn_notes_cancel'),
-        elmt_btn_gmail        = document.getElementById('btn_GMail');
+        elmt_btn_gmail        = document.getElementById('btn_GMail'),
+        elmt_btn_storage_show = document.getElementById('modal_btn_show');
 
     // Global elements
     window.elmt_btn_new_link  = document.getElementById('btn_new_link');
@@ -38,6 +39,7 @@ $(document).ready(function(){
     elmt_btn_notes_cancel.addEventListener('click', cancel_notes_clicked);
     window.btn_nav_search.addEventListener('click',btn_nav_search_clicked);
     elmt_btn_gmail.addEventListener('click', btn_get_gmail_clicked);
+    elmt_btn_storage_show.addEventListener('click', btn_storage_show_clicked);
 
     //getDatascienceRemainingDays();
     getLifeDays();
@@ -250,6 +252,17 @@ function add_link_count(link_name){
             success: function (res){
             }
         })
+}
+
+
+// Below function will triggered after user clicks the show button of the
+// directory size details - modal form
+
+function btn_storage_show_clicked(e){
+    e.preventDefault();
+    directory_value = document.getElementById('modal_directory_path');
+    console.log (directory_value.value);
+    //TODO
 }
 
 function btn_get_gmail_clicked(e){
