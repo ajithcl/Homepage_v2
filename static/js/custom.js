@@ -263,6 +263,17 @@ function btn_storage_show_clicked(e){
     directory_value = document.getElementById('modal_directory_path');
     console.log (directory_value.value);
     //TODO
+    $.ajax({
+        url :'./get_directory_storage_details',
+        type : 'GET',
+        data : {path:directory_value.value},
+        success : function (response){
+            console.log(response)
+        },
+        error : function (xhr){
+            alert("Error");
+        }
+    });
 }
 
 function btn_get_gmail_clicked(e){
