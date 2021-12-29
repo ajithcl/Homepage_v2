@@ -261,14 +261,37 @@ function add_link_count(link_name){
 function btn_storage_show_clicked(e){
     e.preventDefault();
     directory_value = document.getElementById('modal_directory_path');
-    console.log (directory_value.value);
+
     //TODO
     $.ajax({
         url :'./get_directory_storage_details',
         type : 'GET',
         data : {path:directory_value.value},
         success : function (response){
-            console.log(response)
+            // Opens a new tab
+            json_response = JSON.parse(response)
+            if (json_response === null){
+                alert("Invalid response.");
+                return;
+            }
+
+            new_window = window.open("","")
+
+            if (new_window !== null){
+            plot_image_file = json_response['plot_image_filename']
+            plot_image_html = "<img src=" + plot_image_file + ">"
+            storage_list = json_response['storage_details']
+            html_body = plot_image_html + '<p>'
+            storage_list.forEach(function(file_details){
+                html_body+= file_details + '<br>'
+            })
+            html_body+= '</p><br>' ;
+            new_window.document.body.innerHTML = html_body;
+            new_window.focus();
+            }
+            else{
+                alert("Error while generating the report. Try entering sub-folders.");
+            }
         },
         error : function (xhr){
             alert("Error");

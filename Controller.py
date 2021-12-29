@@ -282,13 +282,12 @@ class GetGMail:
 
 class StorageDetails:
     def GET(self):
-        # TODO : path_name should get from web.input.
         web_input = web.input()
         directory_path = web_input["path"]
-        print (directory_path)
         storage_model_result = StorageModel.get_directory_size_details(directory_path)
-        print(storage_model_result)
-
+        result = json.dumps(storage_model_result)
+        # print(result)
+        return result
 
 
 """

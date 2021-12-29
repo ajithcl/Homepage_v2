@@ -1,7 +1,7 @@
 import os
 import matplotlib.pyplot as plt
 
-plot_image_filename = "static/temp/storage_plot.png"
+
 def get_directory_size_details(main_directory):
     '''
     :param main_directory:
@@ -19,8 +19,11 @@ def get_directory_size_details(main_directory):
         directory_sizes.append(sub_directory_size)
         directory_names_and_sizes.append(os.path.basename(sub_directory) + ":"
                                          + get_file_size_format(sub_directory_size))
-    pie_plot_storage_details(directory_sizes, directory_names_and_sizes)
-    return  directory_names_and_sizes
+    plot_image_filename = pie_plot_storage_details(directory_sizes, directory_names_and_sizes)
+    result = {"storage_details": directory_names_and_sizes,
+              "plot_image_filename": plot_image_filename}
+    print (result)
+    return result
 
 
 def get_directory_size(directory_path):
@@ -48,7 +51,9 @@ def get_file_size_format(b, factor=1024, suffix="B"):
 
 
 def pie_plot_storage_details(sizes, names):
+    plot_image_filename = "static/temp/storage_plot.png"
     plt.pie(sizes, labels=names)
     plt.savefig(plot_image_filename)
     plt.close()
     # plt.show()
+    return plot_image_filename
