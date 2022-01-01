@@ -2,7 +2,7 @@ import os
 import matplotlib.pyplot as plt
 
 
-def get_directory_size_details(main_directory):
+def get_directory_size_details(main_directory=""):
     '''
     :param main_directory:
     :return: list.
@@ -10,6 +10,11 @@ def get_directory_size_details(main_directory):
     '''
     directory_sizes = []
     directory_names_and_sizes = []
+
+    if len(main_directory) == 0:
+        result = {"storage_details": "Invalid directory",
+                  "plot_image_filename": ""}
+        return result
 
     for sub_directory in os.listdir(main_directory):
         sub_dir_path = os.path.join(main_directory, sub_directory)
@@ -22,7 +27,6 @@ def get_directory_size_details(main_directory):
     plot_image_filename = pie_plot_storage_details(directory_sizes, directory_names_and_sizes)
     result = {"storage_details": directory_names_and_sizes,
               "plot_image_filename": plot_image_filename}
-    print (result)
     return result
 
 

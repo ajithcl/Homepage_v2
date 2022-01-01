@@ -83,7 +83,6 @@ class Home:
                         "url": record["url"],
                         "type": record["type"],
                         "click_count": record["click_count"],
-                        "type": record["type"],
                         "_id": record["_id"],
                         "accessed_on": datetime.datetime.strftime(record["last_accessed_date"], "%d/%m/%Y")}
             urls_data_list.append(url_dict)

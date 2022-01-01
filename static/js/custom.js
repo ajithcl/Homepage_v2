@@ -260,13 +260,16 @@ function add_link_count(link_name){
 
 function btn_storage_show_clicked(e){
     e.preventDefault();
-    directory_value = document.getElementById('modal_directory_path');
+    directory_value = document.getElementById('modal_directory_path').value;
+    if (directory_value.length == 0){
+        alert("Invalid directory.");
+        return;
+    }
 
-    //TODO
     $.ajax({
         url :'./get_directory_storage_details',
         type : 'GET',
-        data : {path:directory_value.value},
+        data : {path:directory_value},
         success : function (response){
             // Opens a new tab
             json_response = JSON.parse(response)
@@ -274,12 +277,14 @@ function btn_storage_show_clicked(e){
                 alert("Invalid response.");
                 return;
             }
+            // Below error message is required. Otherwise window.open will be timeout/fail.
+            alert("Storage report will be opening in new tab..");
 
             new_window = window.open("","")
 
             if (new_window !== null){
             plot_image_file = json_response['plot_image_filename']
-            plot_image_html = "<img src=" + plot_image_file + ">"
+            plot_image_html = "<img src=" + window.location.href + plot_image_file + ">"
             storage_list = json_response['storage_details']
             html_body = plot_image_html + '<p>'
             storage_list.forEach(function(file_details){
