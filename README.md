@@ -15,15 +15,20 @@ Personalized homepage for the browsers.
    <th>Changes </th>
    <th> Comments </th>
   </tr>
+   <tr>
+   <td> 01 January 2022 </td>
+   <td> Storage report </td>
+   <td> User can view storage details of input directory.</td>
+ </tr> 
   <tr>
    <td> 24 June 2021 </td>
    <td> Access GMAIL </td>
-   <td> User can view recent gmail headers</td>
+   <td> User can view recent gmail headers.</td>
  </tr> 
   <tr>
    <td> 24 June 2021 </td>
    <td> Search functionality for links</td>
-   <td> Type the substrings of links in the search box  and click the search button</td>
+   <td> Type the substrings of links in the search box  and click the search button.</td>
  </tr>
  </table>
  
@@ -49,7 +54,12 @@ Personalized homepage for the browsers.
  
  ![Screenshot 2021-06-24 171047](https://user-images.githubusercontent.com/44773122/123256961-2d874e80-d50f-11eb-88d2-9a0b25df77c5.png)
 With a click of a button, user can view the latest mails from his gmail account.
+ <hr>
  
+![btn](https://user-images.githubusercontent.com/44773122/147848733-b418c8e7-3397-41b3-9322-76cf1abcd987.png)
+![rpt1](https://user-images.githubusercontent.com/44773122/147848734-6418037b-b183-4245-ada1-5ec8b37ebc47.png)
+
+User can enter the directory and view the storage report
  <hr>
  
 ![home2](https://user-images.githubusercontent.com/44773122/114544319-18bd4d80-9c78-11eb-82eb-7eb70dff2c0d.png)
