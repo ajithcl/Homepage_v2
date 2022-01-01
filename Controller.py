@@ -14,7 +14,7 @@ from configparser import ConfigParser
 
 sys.path.append("D:\\Ajith\\PythonProject\\LookAtYou\\")  # For including classes from LookAtYou project
 from Models import ExpenseModel, ReminderModel, HealthModel
-from Models import HomepageNotesModel, UrlsModel
+from Models import HomepageNotesModel, UrlsModel, StorageModel
 
 log_filename = "D:\\Ajith\\PythonProject\\Homepage_v2\\logs\\log.txt"
 logging.basicConfig(filename=log_filename,
@@ -32,7 +32,8 @@ urls = ('/', 'Home',
         '/get_exercise_status', 'get_exercise_status',
         '/update_exercise_status', 'update_exercise_status',
         '/SarusVlogAnalysis', 'SarusVlogAnalysis',
-        '/GetGMail', 'GetGMail'
+        '/GetGMail', 'GetGMail',
+        '/get_directory_storage_details', 'StorageDetails'
         )
 
 app = web.application(urls, globals())
@@ -82,7 +83,6 @@ class Home:
                         "url": record["url"],
                         "type": record["type"],
                         "click_count": record["click_count"],
-                        "type": record["type"],
                         "_id": record["_id"],
                         "accessed_on": datetime.datetime.strftime(record["last_accessed_date"], "%d/%m/%Y")}
             urls_data_list.append(url_dict)
@@ -277,6 +277,16 @@ class GetGMail:
         imap.logout()
         json_data = json.dumps(mail_data_list)
         return json_data
+
+
+class StorageDetails:
+    def GET(self):
+        web_input = web.input()
+        directory_path = web_input["path"]
+        storage_model_result = StorageModel.get_directory_size_details(directory_path)
+        result = json.dumps(storage_model_result)
+        # print(result)
+        return result
 
 
 """

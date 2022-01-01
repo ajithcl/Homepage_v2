@@ -3,7 +3,8 @@ $(document).ready(function(){
     let elmt_greeting         = document.getElementById('set-greetings'),
         elmt_btn_link_cancel  = document.getElementById('btn-link-cancel'),
         elmt_btn_notes_cancel = document.getElementById('btn_notes_cancel'),
-        elmt_btn_gmail        = document.getElementById('btn_GMail');
+        elmt_btn_gmail        = document.getElementById('btn_GMail'),
+        elmt_btn_storage_show = document.getElementById('modal_btn_show');
 
     // Global elements
     window.elmt_btn_new_link  = document.getElementById('btn_new_link');
@@ -38,6 +39,7 @@ $(document).ready(function(){
     elmt_btn_notes_cancel.addEventListener('click', cancel_notes_clicked);
     window.btn_nav_search.addEventListener('click',btn_nav_search_clicked);
     elmt_btn_gmail.addEventListener('click', btn_get_gmail_clicked);
+    elmt_btn_storage_show.addEventListener('click', btn_storage_show_clicked);
 
     //getDatascienceRemainingDays();
     getLifeDays();
@@ -46,6 +48,7 @@ $(document).ready(function(){
     //Links form submit event
     $(document).on('submit', '#links_form', function (e){
         e.preventDefault();
+
         var form_data = $(this).serialize();
         $.ajax({
             url: '/savelink',
@@ -53,11 +56,18 @@ $(document).ready(function(){
             data: form_data,
             success: function (res){
             if (res =="success"){
+                success_message = document.getElementById('links_success_message_id');
+                success_message.hidden=false;
+
                 document.getElementById("url_name").value = "";
                 document.getElementById("url_address").value = "";
+
+                setTimeout(clearMessage, 3000);
             }
             else{
-                alert("Error occured while saving link!");
+                error_message = document.getElementById('links_error_message_id');
+                error_message.hidden = false;
+                setTimeout(clearMessage, 3000);
             }
             }
         })
@@ -73,11 +83,19 @@ $(document).ready(function(){
             data: form_data,
             success: function (res){
             if (res =="success"){
+                success_message = document.getElementById("notes_success_message_id");
+                success_message.hidden=false;
+
                 document.getElementById("notes_title").value = "";
                 document.getElementById("notes").value = "";
+
+                setTimeout(clearMessage, 3000);
             }
             else{
-                alert("Error occured while saving notes!");
+                error_message = document.getElementById('notes_error_message_id');
+                error_message.hidden = false;
+
+                setTimeout(clearMessage, 3000);
             }
             }
         })
@@ -123,7 +141,7 @@ $(document).ready(function(){
                         data: {"_id":link_id},
                         success: function (res){
                             if (res =="success"){
-                                alert("Success")
+                                // alert("Success");
                             }
                             else{
                                 alert("Error occured while saving notes!");
@@ -236,6 +254,56 @@ function add_link_count(link_name){
         })
 }
 
+
+// Below function will triggered after user clicks the show button of the
+// directory size details - modal form
+
+function btn_storage_show_clicked(e){
+    e.preventDefault();
+    directory_value = document.getElementById('modal_directory_path').value;
+    if (directory_value.length == 0){
+        alert("Invalid directory.");
+        return;
+    }
+
+    $.ajax({
+        url :'./get_directory_storage_details',
+        type : 'GET',
+        data : {path:directory_value},
+        success : function (response){
+            // Opens a new tab
+            json_response = JSON.parse(response)
+            if (json_response === null){
+                alert("Invalid response.");
+                return;
+            }
+            // Below error message is required. Otherwise window.open will be timeout/fail.
+            alert("Storage report will be opening in new tab..");
+
+            new_window = window.open("","")
+
+            if (new_window !== null){
+            plot_image_file = json_response['plot_image_filename']
+            plot_image_html = "<img src=" + window.location.href + plot_image_file + ">"
+            storage_list = json_response['storage_details']
+            html_body = plot_image_html + '<p>'
+            storage_list.forEach(function(file_details){
+                html_body+= file_details + '<br>'
+            })
+            html_body+= '</p><br>' ;
+            new_window.document.body.innerHTML = html_body;
+            new_window.focus();
+            }
+            else{
+                alert("Error while generating the report. Try entering sub-folders.");
+            }
+        },
+        error : function (xhr){
+            alert("Error");
+        }
+    });
+}
+
 function btn_get_gmail_clicked(e){
     e.preventDefault();
 
@@ -341,6 +409,20 @@ function update_exercise_status(){
             }
         }
     })
+}
+
+function clearMessage(){
+    success_message=document.getElementById('links_success_message_id');
+    success_message.hidden = true;
+
+    error_message = document.getElementById('links_error_message_id');
+    error_message.hidden = true;
+
+    success_message = document.getElementById("notes_success_message_id");
+    success_message.hidden=true;
+
+    error_message = document.getElementById('notes_error_message_id');
+    error_message.hidden = true;
 }
 
 

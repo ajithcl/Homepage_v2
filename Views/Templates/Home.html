@@ -120,12 +120,44 @@ $def with (page_data)
    </div>
    <hr>
 
-    <!-- GMail content here-->
 
    <div class="row">
         <div class="col-lg-4">
             <div class="row">
+                <!-- GMail content -->
                 <button type="button" class="btn btn-outline-primary" id="btn_GMail" style="float: right;">Show GMail Content</button>
+
+                <!-- System Storage details button -->
+                <button type="button" class="btn btn-outline-primary" id="btn_storage_details"
+                        data-toggle="modal" data-target="#modal_directory_selection" style="float: right;">
+                    Storage Report</button>
+
+                <!-- Modal form for selecting the directory -->
+                <div class="modal fade" id="modal_directory_selection" tabindex="-1" role="dialog"
+                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <!--
+                            <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalLabel">Select the folder</h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                  </button>
+                            </div>
+                            -->
+                            <div class="modal-body">
+                                <input type="text" class="form-control" placeholder="Enter the directory path"
+                                       id="modal_directory_path">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" id="modal_btn_show" data-dismiss="modal">
+                                    Show</button>
+                                <!-- btn_storage_show_clicked () in custom.js -->
+                            </div>
+                        </div>
+                  </div>
+                </div>
            </div>
            <div  id="mail_spinner_div" hidden>
                <div class="spinner-grow" role="status"></div>
@@ -178,6 +210,17 @@ $def with (page_data)
                    <button type="submit" class="btn btn-primary btn-sm" id="btn_save_link">Save</button>
                </div>
            </form>
+
+           <!-- Links success/error message area-->
+           <div class="alert alert-success alert-dismissible fade show" id="links_success_message_id" hidden>
+               <button type="button" class="close" data-dismiss="alert">&times;</button>
+               <strong>Success!</strong> Link saved.
+           </div>
+           <div class="alert alert-danger alert-dismissible fade show" id="links_error_message_id" hidden>
+               <button type="button" class="close" data-dismiss="alert">&times;</button>
+               <strong>Error!</strong> Unable to save the link.
+           </div>
+
            <div class="links_table">
                <table class="table table-striped table-sm">
                    <thead>
@@ -225,6 +268,17 @@ $def with (page_data)
                    <button type="submit" class="btn btn-primary btn-sm" id="btn_save_notes">Save</button>
                </div>
            </form>
+
+           <!-- Notes success/error message area-->
+           <div class="alert alert-success alert-dismissible fade show" id="notes_success_message_id" hidden>
+               <button type="button" class="close" data-dismiss="alert">&times;</button>
+               <strong>Success!</strong> Note saved.
+           </div>
+           <div class="alert alert-danger alert-dismissible fade show" id="notes_error_message_id" hidden>
+               <button type="button" class="close" data-dismiss="alert">&times;</button>
+               <strong>Error!</strong> Unable to save the note.
+           </div>
+
            <div class="notes_cards card-columns" id="notes_cards_block">
                 $for record in page_data["notes_list"]:
                     <div class="card bg-light mb-3" data-rowid=$record["_id"] style="max-width: 18rem;">
