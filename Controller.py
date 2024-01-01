@@ -12,11 +12,11 @@ from bs4 import BeautifulSoup
 import dateutil.parser as dt_parser
 from configparser import ConfigParser
 
-sys.path.append("D:\\Ajith\\PythonProject\\LookAtYou\\")  # For including classes from LookAtYou project
+sys.path.append("/Users/ajith/Programming/PythonProjects/LookAtYou")  # For including classes from LookAtYou project
 from Models import ExpenseModel, ReminderModel, HealthModel
 from Models import HomepageNotesModel, UrlsModel, StorageModel
 
-log_filename = "D:\\Ajith\\PythonProject\\Homepage_v2\\logs\\log.txt"
+log_filename = "Homepage_v2_log.txt"
 logging.basicConfig(filename=log_filename,
                     level=logging.INFO,
                     format="%(asctime)s - %(message)s")
@@ -184,7 +184,8 @@ class update_exercise_status:
         try:
             result = health_model.update_exercise_status(userid="Ajith",
                                                          exercise_status=input_data)
-            if result['ok'] == 1.0:
+
+            if result.modified_count > 0:
                 return "success"
             else:
                 return "error"
